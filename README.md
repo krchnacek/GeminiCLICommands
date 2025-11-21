@@ -2,6 +2,26 @@
 
 This repository contains a set of commands for the Gemini CLI that help streamline the software development workflow. These commands are designed to be used in a specific order to ensure a consistent and efficient process from planning to implementation and testing.
 
+## About Gemini CLI Commands
+
+A Gemini CLI command is a TOML file that defines a specific task for the AI agent. It encapsulates the prompt, role, objective, and constraints for a particular operation, allowing for reproducible and structured AI interactions.
+
+## Installation
+
+To install these commands, simply clone this repository into your Gemini CLI commands directory (typically `~/.gemini/commands`).
+
+```bash
+git clone <repository_url> ~/.gemini/commands
+```
+
+## Usage
+
+Once installed, you can run any of these commands using the `gemini` CLI tool followed by the command name (the filename without the `.toml` extension).
+
+```bash
+gemini <command_name> [arguments]
+```
+
 ## Workflow
 
 The intended workflow is as follows:
@@ -10,7 +30,8 @@ The intended workflow is as follows:
 2.  **`clarify_design [feature_id]`**: Reviews and clarifies the technical design, updating the design document.
 3.  **`tasks [feature_id]`**: Create or update the implementation plan, including testing and documentation strategies.
 4.  **`implement [feature_id]`**: Implement the tasks defined in the specification file, using a TDD/BDD approach.
-5.  **`e2e_tests`**: Run the End-to-End tests to verify the feature in a production-like environment.
+5.  **`tests`**: Run unit and integration tests to verify the implementation.
+6.  **`e2e_tests`**: Run the End-to-End tests to verify the feature in a production-like environment.
 
 ## Commands
 
@@ -66,6 +87,16 @@ The intended workflow is as follows:
     6.  Refactors the code.
     7.  Marks the task as complete in the specification file.
     8.  Commits the changes for each task.
+
+### `tests`
+
+*   **Purpose:** Runs all unit and integration tests in the application.
+*   **Why to use it:** To quickly verify that changes haven't broken existing functionality during the development process (standard "Red-Green-Refactor" loop).
+*   **How to use it:** `gemini tests`
+*   **What it does:**
+    1.  Checks the environment for dependencies.
+    2.  Executes the project's configured unit and integration test runner (e.g., `npm test`, `mvn test`).
+    3.  Reports success or failure with details.
 
 ### `e2e_tests`
 
