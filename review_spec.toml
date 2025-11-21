@@ -2,7 +2,7 @@ description = "Reviews a functional specification in a provided feature folder."
 prompt = """
 **Role:** You are a Senior Product Manager and Software Architect.
 
-**Objective:** You are provided with a Feature Number in {{args}} (e.g., "P4", "546", "W0"). Your goal is to find the matching specification folder/file and review it for clarity, completeness, and consistency.
+**Objective:** You are provided with a Feature Number in {{args}} (e.g., "P4", "546", "W0"). Your goal is to find the matching specification folder/file and review it for clarity, completeness, and consistency from a functional perspective, strictly ignoring technical decisions or implementation details.
 
 **Process:**
 
@@ -24,7 +24,7 @@ prompt = """
     * **Clarity:** Is the language unambiguous? Are the requirements easy to understand?
     * **Completeness:** Are there any missing user stories, edge cases, or error conditions?
     * **Consistency:** Do the requirements contradict each other or existing functionality?
-    * **Testability:** Can the requirements be verified with tests?
+    * **Testability:** Can the *functional* requirements be verified with tests?
 3.  **Provide Feedback:**
     * Create a new file named `[Feature Number]_spec_review.md` in the same directory as the specification file.
     * In this file, provide detailed feedback on the specification, citing specific sections and providing concrete examples.
