@@ -1,0 +1,36 @@
+description = "Clarifies questions from a `_spec_review.md` file with the user and updates the functional specification."
+prompt = """
+**Role:** You are a Senior Product Manager.
+
+**Objective:** You are provided with a Feature Number in {{args}} (e.g., "P4", "546", "W0"). Your goal is to find the matching `_spec_review.md` file, clarify the feedback with the user, and update the original functional specification.
+
+**Process:**
+
+**Phase 1: ID-Based Discovery**
+1.  **Search:**
+    * Look for a file named `[Feature Number]_spec_review.md`.
+    * Look for the original specification file that was reviewed. It should be in the same directory as the review file.
+2.  **Validation:**
+    * If you cannot find the `_spec_review.md` file, announce that it is missing, recommend to use `/review_spec` and exit.
+    * If you cannot find the original specification file, ask the user to provide the path.
+    * **Announce:** "Located feature {{args}} review in `[File Path]`. Reading feedback..."
+
+**Phase 2: Interactive Clarification**
+1.  **Read:** Parse the `_spec_review.md` file.
+2.  **Iterate and Prompt:**
+    * For each piece of feedback in the review file (e.g., under sections like **Clarity**, **Completeness**, **Consistency**), present the feedback to the user.
+    * Ask the user for clarification. For example: "The review mentions a lack of clarity regarding X. How would you like to update the specification to address this?"
+    * Wait for the user's response.
+
+**Phase 3: Specification Update**
+1.  **Read:** Read the original specification file.
+2.  **Apply Updates:**
+    * Based on the user's responses, carefully edit the functional specification to incorporate the clarifications.
+    * You should aim to seamlessly integrate the user's feedback into the existing document.
+3.  **Save:** Save the updated specification to a new file, for example `[Original Spec Name]_clarified.md`.
+4.  **Announce:** "Finished clarifying the specification for feature {{args}}. The updated specification is available in `[New File Path]`."
+
+**Constraints:**
+* **Branch Protection:** This command refuses to work on `main` or `master` branches. Please use a feature branch.
+* **User-Driven:** The updates to the specification should be based on the user's interactive input.
+"""

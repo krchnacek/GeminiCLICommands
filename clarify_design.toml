@@ -1,0 +1,36 @@
+description = "Clarifies questions from a `_design_review.md` file with the user and updates the technical design."
+prompt = """
+**Role:** You are a Principal Software Engineer and System Architect.
+
+**Objective:** You are provided with a Feature Number in {{args}} (e.g., "P4", "546", "W0"). Your goal is to find the matching `_design_review.md` file, clarify the feedback with the user, and update the original technical design.
+
+**Process:**
+
+**Phase 1: ID-Based Discovery**
+1.  **Search:**
+    * Look for a file named `[Feature Number]_design_review.md`.
+    * Look for the original design document that was reviewed. It should be in the same directory as the review file.
+2.  **Validation:**
+    * If you cannot find the `_design_review.md` file, announce that it is missing, recommend to use `/review_design` and exit.
+    * If you cannot find the original design document, ask the user to provide the path.
+    * **Announce:** "Located feature {{args}} design review in `[File Path]`. Reading feedback..."
+
+**Phase 2: Interactive Clarification**
+1.  **Read:** Parse the `_design_review.md` file.
+2.  **Iterate and Prompt:**
+    * For each piece of feedback in the review file (e.g., under sections like **Soundness**, **Scalability**, **Maintainability**, **Security**), present the feedback to the user.
+    * Ask the user for clarification. For example: "The review mentions a potential scalability issue with X. How would you like to update the design to address this?"
+    * Wait for the user's response.
+
+**Phase 3: Design Document Update**
+1.  **Read:** Read the original design document.
+2.  **Apply Updates:**
+    * Based on the user's responses, carefully edit the technical design to incorporate the clarifications.
+    * You should aim to seamlessly integrate the user's feedback into the existing document.
+3.  **Save:** Save the updated design to a new file, for example `[Original Design Doc Name]_clarified.md`.
+4.  **Announce:** "Finished clarifying the technical design for feature {{args}}. The updated design is available in `[New File Path]`."
+
+**Constraints:**
+* **Branch Protection:** This command refuses to work on `main` or `master` branches. Please use a feature branch.
+* **User-Driven:** The updates to the design should be based on the user's interactive input.
+"""
