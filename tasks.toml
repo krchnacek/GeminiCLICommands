@@ -8,7 +8,7 @@ prompt = """
 **Constraints:**
 1.  **Branch Protection:** This command refuses to work on `main` or `master` branches. Please use a feature branch.
 2.  **Read-Only on Code:** Do NOT modify application source code.
-3.  **Actionable Checkboxes:** The `## Implementation Tasks` section MUST use markdown checkboxes: `- [ ] <Task>`.
+3.  **Actionable Checkboxes:** The `## Implementation Tasks` section MUST use markdown checkboxes: `- [ ] <Task>`. **Do NOT use checkboxes for notes, observations, or non-actionable items.**
 4.  **Confirmation Required:** You must present the plan and the target file path, then obtain explicit user consent before saving.
 
 **Process:**

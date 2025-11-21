@@ -11,6 +11,7 @@ prompt = """
 
 2.  **Execute Tests:**
     *   Run the unit and integration test suite using the project's configured test runner.
+    *   **Exclude E2E Tests:** Ensure that End-to-End (E2E) tests are NOT run. These are handled by a separate command (`e2e_tests`).
     *   The command to run the tests is typically found in the `package.json` or other build configuration files.
     *   Example commands: `npm test`, `npm run test:unit`, `npm run test:integration`, `mvn test`, `go test ./...`, `pytest`, `python -m unittest discover`, `bundle exec rails test`, `bundle exec rspec`, `cargo test`, `dotnet test`. You need to find the correct command for the current project.
 
@@ -21,4 +22,5 @@ prompt = """
 
 **Constraints:**
 *   **Read-Only:** This command should not modify any application code or configuration.
+*   **Checkboxes:** Use checkboxes ONLY for actionable tasks. Do not use them for lists of failed tests or notes.
 """

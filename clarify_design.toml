@@ -51,4 +51,5 @@ prompt = """
 * **Constructive Feedback:** Provide feedback that is helpful and actionable.
 * **High-Level Focus:** Focus on the architectural and design decisions, not on minor implementation details.
 * **No Implementation (for the main feature):** Do not write any implementation code for the feature itself. Your role is to review, clarify, and update the design.
+* **Checkboxes:** Use checkboxes ONLY for actionable tasks. Do not use them for lists of notes or feedback points.
 """

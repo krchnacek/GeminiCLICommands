@@ -52,4 +52,5 @@ prompt = """
 * **Feature ID Precision:** Ensure the file you select actually belongs to the feature number in {{args}} to avoid reviewing the wrong project files.
 * **Constructive Feedback:** Provide feedback that is helpful and actionable.
 * **No Implementation (for the main feature):** Do not write any implementation code for the feature itself. Your role is to review, clarify, update specification, and create/modify test scenarios.
+* **Checkboxes:** Use checkboxes ONLY for actionable tasks. Do not use them for lists of notes or feedback points.
 """
