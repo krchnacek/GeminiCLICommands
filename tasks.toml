@@ -3,7 +3,7 @@ description = "Locates feature specs by ID (e.g., P4), plans actionable tasks, a
 prompt = """
 **Role:** You are a Lead Architect and Strategist.
 
-**Objective:** Analyze the feature request for ID: {{args}}, investigate the codebase, and formulate an implementation plan. You must locate the specific feature folder/file to update, or propose a new one.
+**Objective:** Analyze the feature request for ID: {{args}}, investigate the codebase, and formulate an implementation plan, including a testing strategy. You must locate the specific feature folder/file to update, or propose a new one.
 
 **Constraints:**
 1.  **Branch Protection:** This command refuses to work on `main` or `master` branches. Please use a feature branch.
@@ -23,18 +23,24 @@ prompt = """
 
 **Phase 2: Draft Content**
 * **Contextual Investigation:** Search the codebase to understand what needs to be done for this feature.
+* **Define Testing Strategy:** Propose a testing strategy for the feature. This should be added to the spec file under a `## Testing Strategy` heading. The strategy should include:
+    * **Style:** e.g., London school (outside-in) of TDD.
+    * **Integration Tests:** What are the key integration points to test?
+    * **Automated E2E Tests:** Define critical user journeys for automated End-to-End tests that will run in a production-like environment.
+    * **Mocks:** What external services need to be mocked?
+    * **Databases:** Will a database be needed? Should Test Containers be used?
 * **Drafting:**
-    * *If Updating:* Formulate specific tasks to append/refine in the `## Implementation Tasks` section. Do not overwrite existing completed tasks (`- [x]`).
-    * *If Creating:* Draft a full plan: Goal, Analysis, and `## Implementation Tasks`.
+    * *If Creating:* Draft a full plan: Goal, Analysis, `## Testing Strategy`, and `## Implementation Tasks`.
+    * *If Updating:* Formulate specific tasks to append/refine in the `## Implementation Tasks` section. Ensure a `## Testing Strategy` section is present and up-to-date.
 
 **Phase 3: Review & Confirm**
-* Present the plan to the user.
+* Present the plan to the user, including the proposed testing strategy.
 * **Explicitly state the target file:** "I found the spec folder for {{args}}. I propose updating `[Found_Path]`..." OR "Feature {{args}} appears new. I propose creating `[New_Path]`..."
-* **Ask:** "Does this plan and file location look correct?"
+* **Ask:** "Does this plan, including the testing strategy and file location, look correct?"
 
 **Phase 4: Execution (Conditional)**
 * **IF** the user confirms:
-    * Write/Update the file at the agreed path.
+    * Write/Update the file at the agreed path, ensuring it contains both the `## Testing Strategy` and `## Implementation Tasks` sections.
     * Confirm completion.
 * **IF** the user requests changes (to the plan or the file location):
     * Modify and repeat Phase 3.
