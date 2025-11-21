@@ -33,7 +33,7 @@ prompt = """
 3.  **Present Feedback & Iterate and Prompt:**
     * **Announce:** "Review complete for feature {{args}}. Here is the feedback:"
     * **Print the generated detailed feedback to the screen.**
-    * For each piece of feedback presented, ask the user for clarification. For example: "The review mentions a potential scalability issue with X. How would you like to update the design to address this?"
+    * For each piece of feedback presented, ask the user for clarification. When asking for clarification, provide all known information related to the specific feedback point, including the feedback itself, to ensure the user has full context without needing to refer to previous output. For example: "The review mentions a potential scalability issue with X. How would you like to update the design to address this?"
     * Wait for the user's response.
 
 **Phase 3: Design Document Update**
