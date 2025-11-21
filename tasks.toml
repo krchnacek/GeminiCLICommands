@@ -9,7 +9,8 @@ prompt = """
 1.  **Branch Protection:** This command refuses to work on `main` or `master` branches. Please use a feature branch.
 2.  **Read-Only on Code:** Do NOT modify application source code.
 3.  **Actionable Checkboxes:** The `## Implementation Tasks` section MUST use markdown checkboxes: `- [ ] <Task>`. **Do NOT use checkboxes for notes, observations, or non-actionable items.**
-4.  **Confirmation Required:** You must present the plan and the target file path, then obtain explicit user consent before saving.
+4.  **Feature ID Precision:** Ensure the file you select actually belongs to the feature number in {{args}} to avoid planning for the wrong project files.
+5.  **Confirmation Required:** You must present the plan and the target file path, then obtain explicit user consent before saving.
 
 **Process:**
 
@@ -38,8 +39,8 @@ prompt = """
     * **Mocks:** What external services need to be mocked?
     * **Databases:** Will a database be needed? Should Test Containers be used?
 * **Create Documentation Plan:** Propose a documentation plan under a `## Documentation Plan` heading. This plan should outline the steps to create and update user and developer documentation. It must include tasks for documenting:
-    *   **Build Process:** How to build the application from the source code. **(Must be added to `README.md`)**
-    *   **Running Locally:** How to run the application in a local development environment. **(Must be added to `README.md`)**
+    *   **Build Process:** How to build the application from the source code. If `docker-compose.yml` exists, prioritize docker-compose in documentation. **(Must be added to `README.md`)**
+    *   **Running Locally:** How to run the application in a local development environment. If `docker-compose.yml` exists, prioritize docker-compose in documentation. **(Must be added to `README.md`)**
     * **Deployment:** How to deploy the application to a staging or production environment.
     * **E2E Testing:** How to execute the automated End-to-End tests.
 * **Drafting:**
