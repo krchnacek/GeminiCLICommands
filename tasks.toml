@@ -28,9 +28,9 @@ prompt = """
 
 **Phase 2: Draft Content**
 * **Contextual Investigation:** Search the codebase and thoroughly analyze all identified functional specifications and technical designs to understand what needs to be done for this feature.
-* **Interactive Clarification (if needed):**
-    * If, during contextual investigation or when proposing a new feature path, there is ambiguity or missing information (e.g., `FeatureName` for a new feature, unclear requirements), *immediately* ask the user (developer) for clarification.
-    * Continue with the process only after all ambiguities are resolved through user interaction.
+* **Clarify (if needed):**
+    * If, during contextual investigation or when proposing a new feature path, there is ambiguity or missing information (e.g., `FeatureName` for a new feature, unclear requirements), **STOP** and ask the developer for clarification.
+    * Do not proceed with assumptions.
 * **Define Testing Strategy:** Propose a testing strategy for the feature. This should be added to the spec file under a `## Testing Strategy` heading. The strategy should include:
     * **Style:** e.g., London school (outside-in) of TDD.
     * **Integration Tests:** What are the key integration points to test?
