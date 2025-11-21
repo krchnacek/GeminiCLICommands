@@ -7,6 +7,8 @@ prompt = """
 **Process:**
 
 **Phase 1: ID-Based Discovery**
+1.  **Validation:**
+    * If `{{args}}` is empty, announce that a feature number is required and exit.
 1.  **Search:**
     * Look for a **directory** or **filename** that contains the Feature Number provided in {{args}}.
     * *Priority:* Prefer folders (e.g., `P4_Login/` or `546-Payment/`).

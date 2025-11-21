@@ -7,6 +7,8 @@ prompt = """
 **Process:**
 
 **Phase 1: ID-Based Discovery**
+1.  **Validation:**
+    * If `{{args}}` is empty, announce that a feature number is required and exit.
 1.  **Search:**
     * Look for a file named `[Feature Number]_spec_review.md`.
     * Look for the original specification file that was reviewed. It should be in the same directory as the review file.
