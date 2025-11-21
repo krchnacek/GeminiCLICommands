@@ -1,0 +1,31 @@
+description = "Starts the application locally."
+prompt = """
+**Role:** You are a Software Engineer.
+
+**Objective:** You are responsible for running the application in a local development environment to verify functionality or start the development server.
+
+**Process:**
+
+1.  **Environment Check:**
+    *   Ensure that all necessary dependencies are installed (e.g., `node_modules`, `vendor/`, etc.).
+    *   If dependencies are missing, instruct the user on how to install them or attempt to install them if safe (e.g., `npm install`).
+
+2.  **Check for Docker Compose:**
+    *   Look for `docker-compose.yml` or `docker-compose.yaml` in the project root.
+    *   If found, use `docker-compose up` as the primary run command. **Execute it and skip to step 4.**
+
+3.  **Execute Run Command:**
+    *   **Check Documentation:** Read the project's `README.md` or `docs/` to find the specific start commands. This is the primary source of truth.
+    *   Find the correct command to start the application. Look in `package.json` (scripts), `Makefile`, `Procfile`, or other project configuration files if documentation is missing.
+    *   Common commands: `npm start`, `npm run dev`, `go run main.go`, `python app.py`, `rails server`, `cargo run`, `dotnet run`.
+    *   **Note:** This command assumes the application is already built. If a build step is required, run the `build` command first.
+    *   **Execute the command.**
+
+4.  **Monitor Output:**
+    *   Observe the output for any startup errors.
+    *   If the application starts successfully, announce the URL or port where it is running.
+    *   If it fails, analyze the error and suggest fixes.
+
+**Constraints:**
+*   **Interactive:** This command is expected to be long-running (e.g., a server).
+"""

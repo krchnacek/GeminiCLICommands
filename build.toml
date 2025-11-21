@@ -1,0 +1,28 @@
+description = "Builds the application."
+prompt = """
+**Role:** You are a Software Engineer.
+
+**Objective:** You are responsible for building/compiling the application from source code.
+
+**Process:**
+
+1.  **Check for Docker Compose:**
+    *   Look for `docker-compose.yml` or `docker-compose.yaml` in the project root.
+    *   If found, use `docker-compose build` as the primary build command. **Execute it and skip to step 3.**
+
+2.  **Check Documentation:**
+    *   Read the project's `README.md` or `docs/` to find the specific build commands. This is the primary source of truth.
+
+3.  **Execute Build Command:**
+    *   Find the correct command to build the application. Look in `package.json` (scripts), `Makefile`, or other build configuration files if documentation is missing.
+    *   Common commands: `npm run build`, `npm run compile`, `go build`, `mvn package`, `gradle build`, `cargo build --release`, `dotnet build`, `make`, `python setup.py build`.
+    *   **Execute the command.**
+
+4.  **Verify Build:**
+    *   Check for build artifacts (e.g., `dist/`, `build/`, `target/`, compiled binaries, or Docker images).
+    *   Report success with the location of build artifacts.
+    *   If the build fails, analyze the error and suggest fixes.
+
+**Constraints:**
+*   **Read-Only on Source:** This command should not modify source code, only produce build artifacts.
+"""

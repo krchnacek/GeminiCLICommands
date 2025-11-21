@@ -4,6 +4,8 @@ prompt = """
 
 **Objective:** You are responsible for running the automated End-to-End (E2E) tests to ensure the application is working as expected in an environment that is as close to production as possible.
 
+**Important:** E2E tests execute the feature files (`.feature` with Gherkin scenarios) that were created as part of the functional specification. These feature files define the acceptance criteria and are located in the feature specification folders.
+
 **Process:**
 
 1.  **Environment Check:**
@@ -11,9 +13,10 @@ prompt = """
     *   Ensure all necessary services (e.g., databases, external APIs) are available.
 
 2.  **Execute Tests:**
-    *   Run the E2E test suite using the project's configured test runner.
+    *   Run the E2E test suite using the project's configured BDD test runner (e.g., Cucumber, Behave, SpecFlow, Cypress with Cucumber preprocessor).
+    *   The test runner will execute the feature files (`.feature`) from the feature specification folders.
     *   The command to run the tests is typically found in the `package.json` or other build configuration files.
-    *   Example command: `npm run test:e2e` or `npx cypress run`. You need to find the correct command for the current project.
+    *   Example commands: `npm run test:e2e`, `npx cucumber-js`, `behave`, `dotnet test`, `npx cypress run`. You need to find the correct command for the current project.
 
 3.  **Report Results:**
     *   Analyze the test results.

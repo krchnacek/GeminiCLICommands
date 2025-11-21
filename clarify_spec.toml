@@ -41,16 +41,18 @@ prompt = """
 2.  **Apply Updates:**
     * Based on the user's responses, carefully edit the functional specification to incorporate the clarifications.
     * You should aim to seamlessly integrate the user's feedback into the existing document.
-3.  **Create/Modify Test Scenarios:**
-    * Based on the updated functional specification, create new test scenarios or modify existing ones to ensure full coverage of the clarified requirements. These test scenarios should focus on validating the functional aspects of the feature.
+3.  **Create/Modify Feature Files:**
+    * Based on the updated functional specification, create new feature files (`.feature`) or modify existing ones using Gherkin syntax (Given, When, Then) to ensure full coverage of the clarified requirements.
+    * **Critical:** These feature files define the acceptance criteria and will be used directly for automated E2E tests after deployment. All scenarios must be executable.
+    * Feature files should be placed in the same folder as the specification document or in a dedicated `features/` subfolder.
 4.  **Update:** Update the original specification file.
-5.  **Announce:** "Finished clarifying the specification for feature {{args}}. The original specification has been updated at `[File Path]`. Test scenarios have been created/modified as part of the clarification."
+5.  **Announce:** "Finished clarifying the specification for feature {{args}}. The original specification has been updated at `[File Path]`. Feature files with Gherkin scenarios have been created/modified and will be used for E2E testing."
 
 **Constraints:**
 * **Branch Protection:** This command refuses to work on `main` or `master` branches. Please use a feature branch.
 * **User-Driven:** The updates to the specification should be based on the user's interactive input.
 * **Feature ID Precision:** Ensure the file you select actually belongs to the feature number in {{args}} to avoid reviewing the wrong project files.
 * **Constructive Feedback:** Provide feedback that is helpful and actionable.
-* **No Implementation (for the main feature):** Do not write any implementation code for the feature itself. Your role is to review, clarify, update specification, and create/modify test scenarios.
+* **No Implementation (for the main feature):** Do not write any implementation code for the feature itself. Your role is to review, clarify, update specification, and create/modify feature files with Gherkin scenarios.
 * **Checkboxes:** Use checkboxes ONLY for actionable tasks. Do not use them for lists of notes or feedback points.
 """

@@ -22,12 +22,13 @@ prompt = """
 
 **Phase 2: TDD Execution Loop**
 1.  **Read:** Parse the validated specification file. You MUST look for a `## Testing Strategy` section in the file and follow it. If it is not present, ask the user to run the `tasks` command first.
+    * **Feature Files:** If feature files (`.feature` with Gherkin scenarios) are present in the specification folder, you MUST ensure all scenarios are implemented. These feature files define the acceptance criteria and will be used for E2E testing post-deployment.
 2.  **Iterate:** Scan the entire specification file for the first unchecked checkbox (`- [ ]`). You should process tasks in the order they appear in the document.
 3.  **Clarify (if needed):**
     * If there are any unclarities regarding the requirements or implementation details of the current task, **STOP** and ask the developer for clarification.
     * Do not proceed with assumptions.
 4.  **Write Failing Tests (Red):**
-    * Following the testing strategy found in the specification file, write the required failing tests (e.g., integration tests, unit tests). **Do NOT write E2E tests here; those are for post-deployment.**
+    * Following the testing strategy found in the specification file, write the required failing tests (e.g., integration tests, unit tests). **Do NOT write E2E tests here; E2E tests will use the feature files from the specification and run post-deployment.**
     * **BDD Style Tests:** You MUST write tests in a Behavior-Driven Development (BDD) style, using "Given, When, Then" in your test descriptions or comments to clearly structure the test's behavior.
     * Run the tests and confirm they fail as expected. This is crucial.
 5.  **Implement (Green):**
