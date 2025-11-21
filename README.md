@@ -25,7 +25,7 @@ The intended workflow is as follows:
     3.  Presents the review feedback directly to the user.
     4.  Interactively clarifies the feedback with the user, updating the specification based on their input.
     5.  Creates or modifies test scenarios based on the clarified specification.
-    6.  Saves the updated specification (e.g., `[Original Spec Name]_clarified.md`).
+    6.  Updates the original specification file.
 
 ### `clarify_design`
 
@@ -37,7 +37,7 @@ The intended workflow is as follows:
     2.  Analyzes the `## Technical Design` section for soundness, scalability, maintainability, and security.
     3.  Presents the review feedback directly to the user.
     4.  Interactively clarifies the feedback with the user, updating the design document based on their input.
-    5.  Saves the updated design document (e.g., `[Original Design Doc Name]_clarified.md`).
+    5.  Updates the original design document.
 
 ### `tasks`
 

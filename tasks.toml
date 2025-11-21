@@ -18,17 +18,16 @@ prompt = """
     * If `{{args}}` is empty, announce that a feature number is required and exit.
 2.  **Analyze Input:** Treat {{args}} as a Feature ID (e.g., "P4", "546", "W0").
 3.  **Search Context:**
-    * Look for directories or files that contain this Feature ID.
+    * Look for directories or files that contain this Feature ID. Identify all relevant functional specifications and technical designs (Markdown files with appropriate headers).
     * Prioritize `[Feature ID]_clarified.md` files (for both functional specifications and technical designs) as the primary source for planning. If not found, look for original `_spec.md` or `_design.md` files.
-4.  **Determine Target:**
-    * **Match Found:**
-        * If one or more `_clarified.md` files (spec or design) are found, select the most relevant one (e.g., if both spec and design clarified files exist, prefer the one most recently modified, or ask the user to choose). Read it. Your goal is to update the `## Implementation Tasks` section within this file.
-        * If only original (unclarified) spec or design files are found, select the most relevant one (as above). Read it.
-        * If multiple equally relevant files are found (e.g., multiple clarified specs or designs, or multiple original specs/designs without clear priority), ask the user to specify which file to use.
-    * **No Match (New Feature):** If no folder/file exists, propose a new standardized path (e.g., `Features/{{args}}-<FeatureName>/plan.md`).
+3.  **Determine Target:**
+    *   **Relevant Documents Found:** If one or more functional specifications or technical designs are found, consider them as the primary source(s).
+        * If multiple functional specifications or technical designs are found, ask the user to specify which ones to use as the primary sources for planning.
+        * Read the identified primary functional specification(s) and/or technical design(s). Your goal is to update the `## Implementation Tasks` section within *one* of these primary documents (typically the functional specification, if available and appropriate).
+    *   **No Match (New Feature):** If no relevant documents are found, propose a new standardized path (e.g., `Features/{{args}}-<FeatureName>/plan.md`).
 
 **Phase 2: Draft Content**
-* **Contextual Investigation:** Search the codebase to understand what needs to be done for this feature, using the selected specification/design file as the primary source of truth.
+* **Contextual Investigation:** Search the codebase and thoroughly analyze all identified functional specifications and technical designs to understand what needs to be done for this feature.
 * **Interactive Clarification (if needed):**
     * If, during contextual investigation or when proposing a new feature path, there is ambiguity or missing information (e.g., `FeatureName` for a new feature, unclear requirements), *immediately* ask the user (developer) for clarification.
     * Continue with the process only after all ambiguities are resolved through user interaction.

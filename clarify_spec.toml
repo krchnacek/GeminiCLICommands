@@ -43,8 +43,8 @@ prompt = """
     * You should aim to seamlessly integrate the user's feedback into the existing document.
 3.  **Create/Modify Test Scenarios:**
     * Based on the updated functional specification, create new test scenarios or modify existing ones to ensure full coverage of the clarified requirements. These test scenarios should focus on validating the functional aspects of the feature.
-4.  **Save:** Save the updated specification to a new file, for example `[Original Spec Name]_clarified.md`.
-5.  **Announce:** "Finished clarifying the specification for feature {{args}}. The updated specification is available in `[New File Path]`. Test scenarios have been created/modified as part of the clarification."
+4.  **Update:** Update the original specification file.
+5.  **Announce:** "Finished clarifying the specification for feature {{args}}. The original specification has been updated at `[File Path]`. Test scenarios have been created/modified as part of the clarification."
 
 **Constraints:**
 * **Branch Protection:** This command refuses to work on `main` or `master` branches. Please use a feature branch.

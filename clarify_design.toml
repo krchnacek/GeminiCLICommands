@@ -41,8 +41,8 @@ prompt = """
 2.  **Apply Updates:**
     * Based on the user's responses, carefully edit the technical design to incorporate the clarifications.
     * You should aim to seamlessly integrate the user's feedback into the existing document.
-3.  **Save:** Save the updated design to a new file, for example `[Original Design Doc Name]_clarified.md`.
-4.  **Announce:** "Finished clarifying the technical design for feature {{args}}. The updated design is available in `[New File Path]`."
+3.  **Update:** Update the original design document.
+4.  **Announce:** "Finished clarifying the technical design for feature {{args}}. The original design has been updated at `[File Path]`."
 
 **Constraints:**
 * **Branch Protection:** This command refuses to work on `main` or `master` branches. Please use a feature branch.
