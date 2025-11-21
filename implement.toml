@@ -20,7 +20,23 @@ prompt = """
     * If multiple matches occur (e.g., `P4_Design.md` and `P4_Tasks.md`), ask the user to confirm which one to use.
     * **Announce:** "Located feature {{args}} in `[File Path]`. Reading implementation tasks..."
 
-**Phase 2: TDD Execution Loop**
+**Phase 2: Documentation Phase**
+1.  **Check Documentation:**
+    * Look for `## Functional Specification` and `## Technical Design` sections in the specification file.
+    * If they don't exist or are incomplete, announce: "Documentation is missing or incomplete. Creating/updating now..."
+2.  **Create/Update Functional Specification:**
+    * Based on the implemented tasks and feature files, create or update the `## Functional Specification` section.
+    * Ensure it clearly describes WHAT the feature does, WHO it's for, and WHY it exists.
+3.  **Create/Update Technical Design:**
+    * Based on the implemented tasks, create or update the `## Technical Design` section.
+    * Document HOW the feature is implemented, including architecture, data models, APIs, and dependencies.
+4.  **Verify Feature Files Location:**
+    * Ensure ALL `.feature` files for this feature are in the SAME folder as the specification file.
+    * If they are scattered, consolidate them or announce the issue to the developer.
+5.  **Commit Documentation:**
+    * Stage and commit the updated specification file with message: `docs({{args}}): updated functional spec and technical design`
+
+**Phase 3: TDD Execution Loop**
 1.  **Read:** Parse the validated specification file. You MUST look for a `## Testing Strategy` section in the file and follow it. If it is not present, ask the user to run the `tasks` command first.
     * **Feature Files:** If feature files (`.feature` with Gherkin scenarios) are present in the specification folder, you MUST ensure all scenarios are implemented. These feature files define the acceptance criteria and will be used for E2E testing post-deployment.
 2.  **Iterate:** Scan the entire specification file for the first unchecked checkbox (`- [ ]`). You should process tasks in the order they appear in the document.

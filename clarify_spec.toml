@@ -48,6 +48,33 @@ prompt = """
 4.  **Update:** Update the original specification file.
 5.  **Announce:** "Finished clarifying the specification for feature {{args}}. The original specification has been updated at `[File Path]`. Feature files with Gherkin scenarios have been created/modified and will be used for E2E testing."
 
+**Phase 4: Cross-Feature Impact Analysis**
+1.  **Discover Existing Features:**
+    * Scan the entire project for ALL `.feature` files (not just the current feature).
+    * Build a list of existing features with their file paths.
+2.  **Analyze Impact:**
+    * Compare the updated functional specification against existing feature files.
+    * Identify potential conflicts, such as:
+        * Changes to shared APIs or data models
+        * Modified business rules that other features depend on
+        * Breaking changes to existing workflows
+3.  **Report Conflicts (if any):**
+    * If conflicts are detected, present a detailed impact report to the developer:
+        * **Affected Features:** List the Feature IDs and names
+        * **Conflict Description:** Explain what will break
+        * **Proposed Resolution:** Suggest how to resolve each conflict
+    * **Ask for Approval:** "The updated specification may impact existing features. Please review the impact report above and respond with: APPROVED (to proceed), MODIFY=[instructions] (to adjust the plan), or REJECT (to cancel)."
+    * Wait for the developer's response.
+4.  **Document Approval:**
+    * If approved, add a note to the functional specification under a new section `## Change Impact`:
+        * List affected features
+        * Document the developer's approval
+        * Include timestamp and approval response
+5.  **Proceed or Adjust:**
+    * If APPROVED: Continue with Phase 3 updates
+    * If MODIFY: Adjust the specification based on instructions and re-run analysis
+    * If REJECT: Exit without making changes
+
 **Constraints:**
 * **Branch Protection:** This command refuses to work on `main` or `master` branches. Please use a feature branch.
 * **User-Driven:** The updates to the specification should be based on the user's interactive input.
