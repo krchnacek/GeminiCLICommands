@@ -14,7 +14,9 @@ prompt = """
 **Process:**
 
 **Phase 1: Smart Discovery (Feature ID Search)**
-1.  **Analyze Input:** Treat {{args}} as a Feature ID (e.g., "P4", "546", "W0").
+1.  **Validation:**
+    * If `{{args}}` is empty, announce that a feature number is required and exit.
+2.  **Analyze Input:** Treat {{args}} as a Feature ID (e.g., "P4", "546", "W0").
 2.  **Search Context:**
     * Look for directories or files that contain this Feature ID (e.g., `P4-Login/`, `546_Payment.md`).
 3.  **Determine Target:**
