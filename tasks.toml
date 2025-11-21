@@ -34,7 +34,7 @@ prompt = """
 * **Define Testing Strategy:** Propose a testing strategy for the feature. This should be added to the spec file under a `## Testing Strategy` heading. The strategy should include:
     * **Style:** e.g., London school (outside-in) of TDD.
     * **Integration Tests:** What are the key integration points to test?
-    * **Automated E2E Tests:** Define critical user journeys for automated End-to-End tests that will run in a production-like environment. For each journey, create a corresponding task in the `## Implementation Tasks` section to ensure it gets implemented.
+    * **Automated E2E Tests:** Define critical user journeys for automated End-to-End tests that will run **after deployment** in a production-like environment. These should NOT be part of the implementation TDD loop.
     * **Mocks:** What external services need to be mocked?
     * **Databases:** Will a database be needed? Should Test Containers be used?
 * **Create Documentation Plan:** Propose a documentation plan under a `## Documentation Plan` heading. This plan should outline the steps to create and update user and developer documentation. It must include tasks for documenting:

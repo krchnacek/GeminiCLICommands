@@ -24,7 +24,7 @@ prompt = """
 1.  **Read:** Parse the validated specification file. You MUST look for a `## Testing Strategy` section in the file and follow it. If it is not present, ask the user to run the `tasks` command first.
 2.  **Iterate:** Scan the entire specification file for the first unchecked checkbox (`- [ ]`). You should process tasks in the order they appear in the document.
 3.  **Write Failing Tests (Red):**
-    * Following the testing strategy found in the specification file, write the required failing tests (e.g., E2E tests, integration tests, unit tests).
+    * Following the testing strategy found in the specification file, write the required failing tests (e.g., integration tests, unit tests). **Do NOT write E2E tests here; those are for post-deployment.**
     * **BDD Style Tests:** You MUST write tests in a Behavior-Driven Development (BDD) style, using "Given, When, Then" in your test descriptions or comments to clearly structure the test's behavior.
     * Run the tests and confirm they fail as expected. This is crucial.
 4.  **Implement (Green):**
