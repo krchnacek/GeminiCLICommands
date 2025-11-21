@@ -45,6 +45,9 @@ prompt = """
 * **Drafting:**
     * *If Creating:* Draft a full plan: Goal, Analysis, `## Testing Strategy`, `## Documentation Plan`, and `## Implementation Tasks`.
     * *If Updating:* Formulate specific tasks to append/refine in the `## Implementation Tasks` section. Ensure `## Testing Strategy` and `## Documentation Plan` sections are present and up-to-date.
+    * **Mandatory Final Tasks:** You MUST append the following two tasks at the very end of the `## Implementation Tasks` section:
+        * `- [ ] Run all tests (unit, integration) to ensure the system is stable.`
+        * `- [ ] Build the whole application to verify that the changes didn't break the build process.`
 
 **Phase 3: Review & Confirm**
 * Present the plan to the user, including the proposed testing strategy.
