@@ -17,48 +17,49 @@ prompt = """
 **Phase 1: Smart Discovery (Feature ID Search)**
 1.  **Validation:**
     * If `{{args}}` is empty, announce that a feature number is required and exit.
-2.  **Analyze Input:** Treat {{args}} as a Feature ID (e.g., "P4", "546", "W0").
-3.  **Search Context:**
-    * Look for directories or files that contain this Feature ID. Identify all relevant functional specifications and technical designs (Markdown files with appropriate headers).
-    * Prioritize `[Feature ID]_clarified.md` files (for both functional specifications and technical designs) as the primary source for planning. If not found, look for original `_spec.md` or `_design.md` files.
-3.  **Determine Target:**
-    *   **Relevant Documents Found:** If one or more functional specifications or technical designs are found, consider them as the primary source(s).
-        * If multiple functional specifications or technical designs are found, ask the user to specify which ones to use as the primary sources for planning.
-        * Read the identified primary functional specification(s) and/or technical design(s). Your goal is to update the `## Implementation Tasks` section within *one* of these primary documents (typically the functional specification, if available and appropriate).
-    *   **No Match (New Feature):** If no relevant documents are found, propose a new standardized path (e.g., `Features/{{args}}-<FeatureName>/plan.md`).
+2.  **Search Context:**
+    * Look for directories or files that contain the Feature Number provided in {{args}}.
+    * *Priority:* Prefer folders (e.g., `P4_Login/` or `546-Payment/`).
+    * If a folder is found, scan inside it for a Markdown file (`.md`) containing `## Functional Specification` or `## Technical Design`.
+    * If no existing feature is found, propose a new standardized path (e.g., `Features/{{args}}-<FeatureName>/spec.md`).
+3.  **Analyze Content:**
+    * Read the identified primary functional specification(s) and/or technical design(s).
+    * Your goal is to update (or create) the `## Implementation Tasks` section within the primary specification file.
 
 **Phase 2: Draft Content**
-* **Contextual Investigation:** Search the codebase and thoroughly analyze all identified functional specifications and technical designs to understand what needs to be done for this feature.
+* **Contextual Investigation:** Search the codebase and thoroughly analyze all identified functional specifications and technical designs to understand what needs to be done.
 * **Clarify (if needed):**
-    * If, during contextual investigation or when proposing a new feature path, there is ambiguity or missing information (e.g., `FeatureName` for a new feature, unclear requirements), **STOP** and ask the developer for clarification.
-    * Do not proceed with assumptions.
-* **Define Testing Strategy:** Propose a testing strategy for the feature. This should be added to the spec file under a `## Testing Strategy` heading. The strategy should include:
+    * If there is ambiguity (e.g., `FeatureName` for a new feature, unclear requirements), **STOP** and ask the developer for clarification.
+* **Define Testing Strategy:** Propose a testing strategy to be added under a `## Testing Strategy` heading:
     * **Style:** e.g., London school (outside-in) of TDD.
-    * **Integration Tests:** What are the key integration points to test?
-    * **Automated E2E Tests:** Reference the feature files (`.feature` with Gherkin scenarios) from the functional specification. These feature files define the acceptance criteria and will be executed as automated End-to-End tests **after deployment** in a production-like environment. All scenarios in the feature files MUST be implemented. E2E tests are NOT part of the implementation TDD loop.
-    * **Mocks:** What external services need to be mocked?
-    * **Databases:** Will a database be needed? Should Test Containers be used?
-* **Create Documentation Plan:** Propose a documentation plan under a `## Documentation Plan` heading. This plan should outline the steps to create and update user and developer documentation. It must include tasks for documenting:
-    *   **Build Process:** How to build the application from the source code. If `docker-compose.yml` exists, prioritize docker-compose in documentation. **(Must be added to `README.md`)**
-    *   **Running Locally:** How to run the application in a local development environment. If `docker-compose.yml` exists, prioritize docker-compose in documentation. **(Must be added to `README.md`)**
-    * **Deployment:** How to deploy the application to a staging or production environment.
-    * **E2E Testing:** How to execute the automated End-to-End tests.
-* **Drafting:**
-    * *If Creating:* Draft a full plan: Goal, Analysis, `## Testing Strategy`, `## Documentation Plan`, and `## Implementation Tasks`.
-    * *If Updating:* Formulate specific tasks to append/refine in the `## Implementation Tasks` section. Ensure `## Testing Strategy` and `## Documentation Plan` sections are present and up-to-date.
-    * **Mandatory Final Tasks:** You MUST append the following two tasks at the very end of the `## Implementation Tasks` section:
+    * **Integration Points:** What are the key integration points to test?
+    * **E2E Coverage:** Note that E2E tests will utilize the `.feature` files located in the specification folder or `features/` subfolder.
+* **Create Documentation Plan:** Propose a `## Documentation Plan`. Include tasks for:
+    * **Build/Run:** Updates to `README.md` if build/run steps change.
+    * **Deployment:** How to deploy the application.
+* **Draft Implementation Tasks:**
+    * Formulate specific, atomic tasks to append to the `## Implementation Tasks` section.
+    * **Mandatory Final Tasks:** You MUST append the following two tasks at the very end of the list:
         * `- [ ] Run all tests (unit, integration) to ensure the system is stable.`
         * `- [ ] Build the whole application to verify that the changes didn't break the build process.`
 
-**Phase 3: Review & Confirm**
-* Present the plan to the user, including the proposed testing strategy.
-* **Explicitly state the target file:** "I found the spec folder for {{args}}. I propose updating `[Found_Path]`..." OR "Feature {{args}} appears new. I propose creating `[New_Path]`..."
+**Phase 3: Cross-Feature Impact Analysis**
+1.  **Analyze:**
+    * Compare your proposed Implementation Tasks against existing `.feature` files and design docs in the project.
+    * Look for potential conflicts (e.g., changing a shared API, modifying a database schema used by another feature).
+2.  **Report:**
+    * If conflicts are found, list them clearly in the output before asking for confirmation.
+
+**Phase 4: Review & Confirm**
+* Present the full plan (Strategy, Documentation, Tasks) to the user.
+* **Explicitly state the target file:** "I propose updating `[Found_Path]`..."
 * **Ask:** "Does this plan, including the testing strategy and file location, look correct?"
 
-**Phase 4: Execution (Conditional)**
+**Phase 5: Execution (Conditional)**
 * **IF** the user confirms:
-    * Write/Update the file at the agreed path, ensuring it contains both the `## Testing Strategy` and `## Implementation Tasks` sections.
+    * Write/Update the file at the agreed path. Ensure the file contains `## Testing Strategy`, `## Documentation Plan`, and `## Implementation Tasks`.
+    * **Do NOT** overwrite the `## Functional Specification` or `## Technical Design` sections; append your new sections after them.
     * Confirm completion.
-* **IF** the user requests changes (to the plan or the file location):
-    * Modify and repeat Phase 3.
+* **IF** the user requests changes:
+    * Modify and repeat Phase 4.
 """

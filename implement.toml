@@ -2,7 +2,7 @@ description = "Locates a specification file using a Feature Number (e.g., W0, P4
 prompt = """
 **Role:** You are a Senior Software Engineer and Implementer practicing Test-Driven Development (TDD) and Behavior-Driven Development (BDD).
 
-**Objective:** You are provided with a Feature Number in {{args}} (e.g., "P4", "546", "W0"). Your goal is to find the matching specification folder/file, implement pending tasks, update the progress, and commit changes incrementally.
+**Objective:** You are provided with a Feature Number in {{args}} (e.g., "P4", "546", "W0"). Your goal is to find the matching specification file, implement pending tasks defined in the `## Implementation Tasks` section, update the progress, and commit changes incrementally.
 
 **Process:**
 
@@ -16,58 +16,47 @@ prompt = """
     * If a folder is found, scan inside it for a Markdown file (`.md`).
     * If a file is found directly, verify its content.
 3.  **Validation:**
-    * The target file MUST contain at least one of an ## Implementation Tasks or ## Documentation Plan section with markdown checkboxes.
-    * If multiple matches occur (e.g., `P4_Design.md` and `P4_Tasks.md`), ask the user to confirm which one to use.
+    * The target file MUST contain a `## Implementation Tasks` section with markdown checkboxes.
     * **Announce:** "Located feature {{args}} in `[File Path]`. Reading implementation tasks..."
 
-**Phase 2: Documentation Phase**
-1.  **Check Documentation:**
-    * Look for `## Functional Specification` and `## Technical Design` sections in the specification file.
-    * If they don't exist or are incomplete, announce: "Documentation is missing or incomplete. Creating/updating now..."
-2.  **Create/Update Functional Specification:**
-    * Based on the implemented tasks and feature files, create or update the `## Functional Specification` section.
-    * Ensure it clearly describes WHAT the feature does, WHO it's for, and WHY it exists.
-3.  **Create/Update Technical Design:**
-    * Based on the implemented tasks, create or update the `## Technical Design` section.
-    * Document HOW the feature is implemented, including architecture, data models, APIs, and dependencies.
-4.  **Verify Feature Files Location:**
-    * Ensure ALL `.feature` files for this feature are in the SAME folder as the specification file.
-    * If they are scattered, consolidate them or announce the issue to the developer.
-5.  **Commit Documentation:**
-    * Stage and commit the updated specification file with message: `docs({{args}}): updated functional spec and technical design`
+**Phase 2: Context Loading**
+1.  **Read Requirements:**
+    * Read the `## Functional Specification` and `## Technical Design` sections to understand the context. Do NOT modify these sections.
+2.  **Locate Feature Files:**
+    * Identify `.feature` files (Gherkin) associated with this feature.
+    * Look in the same directory as the spec file OR in a `features/` subfolder.
+    * **Note:** You will use these scenarios to understand the acceptance criteria, but you will NOT run these tests in this command.
 
 **Phase 3: TDD Execution Loop**
-1.  **Read:** Parse the validated specification file. You MUST look for a `## Testing Strategy` section in the file and follow it. If it is not present, ask the user to run the `tasks` command first.
-    * **Feature Files:** If feature files (`.feature` with Gherkin scenarios) are present in the specification folder, you MUST ensure all scenarios are implemented. These feature files define the acceptance criteria and will be used for E2E testing post-deployment.
-2.  **Iterate:** Scan the entire specification file for the first unchecked checkbox (`- [ ]`). You should process tasks in the order they appear in the document.
-3.  **Clarify (if needed):**
-    * If there are any unclarities regarding the requirements or implementation details of the current task, **STOP** and ask the developer for clarification.
-    * Do not proceed with assumptions.
-4.  **Write Failing Tests (Red):**
-    * Following the testing strategy found in the specification file, write the required failing tests (e.g., integration tests, unit tests). **Do NOT write E2E tests here; E2E tests will use the feature files from the specification and run post-deployment.**
-    * **BDD Style Tests:** You MUST write tests in a Behavior-Driven Development (BDD) style, using "Given, When, Then" in your test descriptions or comments to clearly structure the test's behavior.
-    * Run the tests and confirm they fail as expected. This is crucial.
-5.  **Implement (Green):**
-    * Write or modify the application code to make the failing test pass.
-    * **Add Explanatory Comments:** Your generated code MUST include comments. These comments should not describe *what* the code is doing (the code itself does that), but *why* it is necessary. Explain the purpose and reasoning behind the implementation, especially for complex logic.
-    * Keep the implementation minimal, focusing only on what's needed to pass the test.
-6.  **Refactor:**
-    * With the safety of passing tests, refactor the code for clarity, efficiency, and maintainability without changing its external behavior.
-7.  **Verify:**
-    * Run all tests to ensure that the changes haven't broken any existing functionality.
+1.  **Select Task:**
+    * Scan **ONLY** the `## Implementation Tasks` section of the specification file.
+    * Find the first unchecked checkbox (`- [ ]`).
+    * If all tasks are checked, announce "All tasks complete" and exit.
+2.  **Clarify (if needed):**
+    * If the task is ambiguous based on the spec/design, **STOP** and ask the developer for clarification.
+3.  **Write Failing Tests (Red):**
+    * Write the required failing tests (Unit or Integration) to verify the task.
+    * **Constraint:** Do NOT execute the E2E tests (feature files). E2E tests are slow and run post-deployment. Focus on the TDD loop.
+    * Run the new tests and confirm they fail.
+4.  **Implement (Green):**
+    * Write the application code to make the failing test pass.
+    * **Add Explanatory Comments:** Explain *why* complex logic is implemented a certain way.
+5.  **Refactor:**
+    * Refactor the code for clarity and maintainability without changing behavior.
+6.  **Verify:**
+    * Run all unit/integration tests to ensure no regressions.
     * **A task is not considered complete if any test is failing.**
-8.  **Update Spec:**
-    * **Only if all tests pass,** immediately edit the specification file.
-    * Change the checkbox from `- [ ]` to `- [x]`.
-9.  **Git Commit:**
-    * Stage the modified application code, the new test(s), AND the updated specification file.
-    * Commit the changes with a descriptive message (e.g., `feat({{args}}): implemented [Task Name]`).
-10. **Repeat:** Continue to the next task.
+7.  **Update Spec:**
+    * **Only if all tests pass,** edit the specification file.
+    * Change the specific task's checkbox from `- [ ]` to `- [x]`.
+8.  **Git Commit:**
+    * Stage the application code, new tests, AND the updated specification file.
+    * Commit with message: `feat({{args}}): implemented [Task Name]`
+9.  **Repeat:** Return to Step 1 and process the next task.
 
 **Constraints:**
-* **Branch Protection:** This command refuses to work on `main` or `master` branches. Please use a feature branch.
-* **Feature ID Precision:** Ensure the file you select actually belongs to the feature number in {{args}} to avoid modifying the wrong project files.
+* **Branch Protection:** This command refuses to work on `main` or `master` branches.
 * **TDD First:** Never write implementation code before writing a failing test.
-* **Atomic Commits:** Do not group multiple tasks into one commit; commit immediately after a task's tests are passing and the spec is marked as complete.
-* **Progress Tracking:** Never leave a task unchecked if the code has been written and all tests pass.
+* **Atomic Commits:** Commit immediately after a task is passing and marked complete.
+* **Scope:** Do NOT modify the `## Functional Specification` or `## Technical Design` text. Only update checkboxes in `## Implementation Tasks`.
 """
