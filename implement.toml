@@ -14,13 +14,13 @@ prompt = """
     * If a folder is found, scan inside it for a Markdown file (`.md`).
     * If a file is found directly, verify its content.
 3.  **Validation:**
-    * The target file MUST contain a section header: `## Implementation Tasks` (or `Steps`).
+    * The target file MUST contain at least one of an ## Implementation Tasks or ## Documentation Plan section with markdown checkboxes.
     * If multiple matches occur (e.g., `P4_Design.md` and `P4_Tasks.md`), ask the user to confirm which one to use.
     * **Announce:** "Located feature {{args}} in `[File Path]`. Reading implementation tasks..."
 
 **Phase 2: TDD Execution Loop**
 1.  **Read:** Parse the validated specification file. You MUST look for a `## Testing Strategy` section in the file and follow it. If it is not present, ask the user to run the `tasks` command first.
-2.  **Iterate:** Locate the `## Implementation Tasks` section and find the first **unchecked** checkbox (`- [ ]`).
+2.  **Iterate:** Scan the entire specification file for the first unchecked checkbox (`- [ ]`). You should process tasks in the order they appear in the document.
 3.  **Write Failing Tests (Red):**
     * Following the testing strategy found in the specification file, write the required failing tests (e.g., integration tests, unit tests).
     * **BDD Style Tests:** You MUST write tests in a Behavior-Driven Development (BDD) style, using "Given, When, Then" in your test descriptions or comments to clearly structure the test's behavior.

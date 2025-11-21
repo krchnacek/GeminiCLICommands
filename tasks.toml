@@ -29,9 +29,14 @@ prompt = """
     * **Automated E2E Tests:** Define critical user journeys for automated End-to-End tests that will run in a production-like environment.
     * **Mocks:** What external services need to be mocked?
     * **Databases:** Will a database be needed? Should Test Containers be used?
+* **Create Documentation Plan:** Propose a documentation plan under a `## Documentation Plan` heading. This plan should outline the steps to create and update user and developer documentation. It must include tasks for documenting:
+    * **Build Process:** How to build the application from the source code.
+    * **Running Locally:** How to run the application in a local development environment.
+    * **Deployment:** How to deploy the application to a staging or production environment.
+    * **E2E Testing:** How to execute the automated End-to-End tests.
 * **Drafting:**
-    * *If Creating:* Draft a full plan: Goal, Analysis, `## Testing Strategy`, and `## Implementation Tasks`.
-    * *If Updating:* Formulate specific tasks to append/refine in the `## Implementation Tasks` section. Ensure a `## Testing Strategy` section is present and up-to-date.
+    * *If Creating:* Draft a full plan: Goal, Analysis, `## Testing Strategy`, `## Documentation Plan`, and `## Implementation Tasks`.
+    * *If Updating:* Formulate specific tasks to append/refine in the `## Implementation Tasks` section. Ensure `## Testing Strategy` and `## Documentation Plan` sections are present and up-to-date.
 
 **Phase 3: Review & Confirm**
 * Present the plan to the user, including the proposed testing strategy.
