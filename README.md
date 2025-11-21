@@ -107,3 +107,24 @@ The intended workflow is as follows:
     1.  Checks that the application is running in the correct test environment.
     2.  Executes the E2E test suite.
     3.  Reports the test results.
+
+### `build`
+
+*   **Purpose:** Builds the application from source code.
+*   **Why to use it:** To compile/build the application before running or deploying it.
+*   **How to use it:** `gemini build`
+*   **What it does:**
+    1.  Checks documentation for build instructions.
+    2.  Finds and executes the project's build command (e.g., `npm run build`).
+    3.  Verifies build artifacts and reports success or failure.
+
+### `run`
+
+*   **Purpose:** Starts the application locally.
+*   **Why to use it:** To run the application in a local development environment for manual testing or development.
+*   **How to use it:** `gemini run`
+*   **What it does:**
+    1.  Checks for dependencies.
+    2.  Finds and executes the project's start command (e.g., `npm start`).
+    3.  Monitors output for errors or success messages.
+    4.  Note: Assumes the app is already built (run `build` first if needed).

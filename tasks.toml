@@ -38,8 +38,8 @@ prompt = """
     * **Mocks:** What external services need to be mocked?
     * **Databases:** Will a database be needed? Should Test Containers be used?
 * **Create Documentation Plan:** Propose a documentation plan under a `## Documentation Plan` heading. This plan should outline the steps to create and update user and developer documentation. It must include tasks for documenting:
-    * **Build Process:** How to build the application from the source code.
-    * **Running Locally:** How to run the application in a local development environment.
+    *   **Build Process:** How to build the application from the source code. **(Must be added to `README.md`)**
+    *   **Running Locally:** How to run the application in a local development environment. **(Must be added to `README.md`)**
     * **Deployment:** How to deploy the application to a staging or production environment.
     * **E2E Testing:** How to execute the automated End-to-End tests.
 * **Drafting:**
