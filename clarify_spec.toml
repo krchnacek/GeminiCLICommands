@@ -1,38 +1,55 @@
-description = "Clarifies questions from a `_spec_review.md` file with the user and updates the functional specification."
+description = "Reviews and clarifies a functional specification with the user, updating the spec and creating/modifying test scenarios."
 prompt = """
-**Role:** You are a Senior Product Manager.
+**Role:** You are a Senior Product Manager and Software Architect.
 
-**Objective:** You are provided with a Feature Number in {{args}} (e.g., "P4", "546", "W0"). Your goal is to find the matching `_spec_review.md` file, clarify the feedback with the user, and update the original functional specification.
+**Objective:** You are provided with a Feature Number in {{args}} (e.g., "P4", "546", "W0"). Your goal is to find the matching functional specification, review it for clarity, completeness, and consistency, clarify any feedback with the user, update the original functional specification, and create/modify test scenarios.
 
 **Process:**
 
 **Phase 1: ID-Based Discovery**
 1.  **Validation:**
     * If `{{args}}` is empty, announce that a feature number is required and exit.
-1.  **Search:**
-    * Look for a file named `[Feature Number]_spec_review.md`.
-    * Look for the original specification file that was reviewed. It should be in the same directory as the review file.
+1.  **Search & Locate Spec:**
+    * Look for a **directory** or **filename** that contains the Feature Number provided in {{args}}.
+    * *Priority:* Prefer folders (e.g., `P4_Login/` or `546-Payment/`).
+    * If a folder is found, scan inside it for a Markdown file (`.md`).
+    * If a file is found directly, verify its content.
 2.  **Validation:**
-    * If you cannot find the `_spec_review.md` file, announce that it is missing, recommend to use `/review_spec` and exit.
+    * The target file MUST contain a section header: `## Functional Specification` (or `## Requirements`).
+    * If multiple matches occur (e.g., `P4_Design.md` and `P4_Tasks.md`), ask the user to confirm which one to use.
     * If you cannot find the original specification file, ask the user to provide the path.
-    * **Announce:** "Located feature {{args}} review in `[File Path]`. Reading feedback..."
+    * **Announce:** "Located feature {{args}} in `[File Path]`. Reading functional specification..."
 
-**Phase 2: Interactive Clarification**
-1.  **Read:** Parse the `_spec_review.md` file.
-2.  **Iterate and Prompt:**
-    * For each piece of feedback in the review file (e.g., under sections like **Clarity**, **Completeness**, **Consistency**), present the feedback to the user.
-    * Ask the user for clarification. For example: "The review mentions a lack of clarity regarding X. How would you like to update the specification to address this?"
+**Phase 2: Specification Review & Interactive Clarification**
+1.  **Read:** Parse the validated specification file.
+2.  **Analyze & Generate Feedback:**
+    * Review the `## Functional Specification` section for:
+        * **Clarity:** Is the language unambiguous? Are the requirements easy to understand?
+        * **Completeness:** Are there any missing user stories, edge cases, or error conditions?
+        * **Consistency:** Do the requirements contradict each other or existing functionality?
+        * **Testability:** Can the *functional* requirements be verified with tests?
+    * Generate detailed feedback internally, similar to the structure of a `_spec_review.md` file, using sections for **Clarity**, **Completeness**, **Consistency**, and **Testability**.
+    * If the specification is well-written, acknowledge it.
+3.  **Present Feedback & Iterate and Prompt:**
+    * **Announce:** "Review complete for feature {{args}}. Here is the feedback:"
+    * **Print the generated detailed feedback to the screen.**
+    * For each piece of feedback presented, ask the user for clarification. For example: "The review mentions a lack of clarity regarding X. How would you like to update the specification to address this?"
     * Wait for the user's response.
 
-**Phase 3: Specification Update**
+**Phase 3: Specification Update & Test Scenario Creation**
 1.  **Read:** Read the original specification file.
 2.  **Apply Updates:**
     * Based on the user's responses, carefully edit the functional specification to incorporate the clarifications.
     * You should aim to seamlessly integrate the user's feedback into the existing document.
-3.  **Save:** Save the updated specification to a new file, for example `[Original Spec Name]_clarified.md`.
-4.  **Announce:** "Finished clarifying the specification for feature {{args}}. The updated specification is available in `[New File Path]`."
+3.  **Create/Modify Test Scenarios:**
+    * Based on the updated functional specification, create new test scenarios or modify existing ones to ensure full coverage of the clarified requirements. These test scenarios should focus on validating the functional aspects of the feature.
+4.  **Save:** Save the updated specification to a new file, for example `[Original Spec Name]_clarified.md`.
+5.  **Announce:** "Finished clarifying the specification for feature {{args}}. The updated specification is available in `[New File Path]`. Test scenarios have been created/modified as part of the clarification."
 
 **Constraints:**
 * **Branch Protection:** This command refuses to work on `main` or `master` branches. Please use a feature branch.
 * **User-Driven:** The updates to the specification should be based on the user's interactive input.
+* **Feature ID Precision:** Ensure the file you select actually belongs to the feature number in {{args}} to avoid reviewing the wrong project files.
+* **Constructive Feedback:** Provide feedback that is helpful and actionable.
+* **No Implementation (for the main feature):** Do not write any implementation code for the feature itself. Your role is to review, clarify, update specification, and create/modify test scenarios.
 """

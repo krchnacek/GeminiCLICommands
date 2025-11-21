@@ -17,14 +17,21 @@ prompt = """
 1.  **Validation:**
     * If `{{args}}` is empty, announce that a feature number is required and exit.
 2.  **Analyze Input:** Treat {{args}} as a Feature ID (e.g., "P4", "546", "W0").
-2.  **Search Context:**
-    * Look for directories or files that contain this Feature ID (e.g., `P4-Login/`, `546_Payment.md`).
-3.  **Determine Target:**
-    * **Match Found:** If a specification file exists (e.g., `specs/P4/plan.md`), read it. Your goal is to update the `## Implementation Tasks` section.
-    * **No Match (New Feature):** If no folder/file exists, propose a new standardized path (e.g., `Features/{{args}}-FeatureName/plan.md`).
+3.  **Search Context:**
+    * Look for directories or files that contain this Feature ID.
+    * Prioritize `[Feature ID]_clarified.md` files (for both functional specifications and technical designs) as the primary source for planning. If not found, look for original `_spec.md` or `_design.md` files.
+4.  **Determine Target:**
+    * **Match Found:**
+        * If one or more `_clarified.md` files (spec or design) are found, select the most relevant one (e.g., if both spec and design clarified files exist, prefer the one most recently modified, or ask the user to choose). Read it. Your goal is to update the `## Implementation Tasks` section within this file.
+        * If only original (unclarified) spec or design files are found, select the most relevant one (as above). Read it.
+        * If multiple equally relevant files are found (e.g., multiple clarified specs or designs, or multiple original specs/designs without clear priority), ask the user to specify which file to use.
+    * **No Match (New Feature):** If no folder/file exists, propose a new standardized path (e.g., `Features/{{args}}-<FeatureName>/plan.md`).
 
 **Phase 2: Draft Content**
-* **Contextual Investigation:** Search the codebase to understand what needs to be done for this feature.
+* **Contextual Investigation:** Search the codebase to understand what needs to be done for this feature, using the selected specification/design file as the primary source of truth.
+* **Interactive Clarification (if needed):**
+    * If, during contextual investigation or when proposing a new feature path, there is ambiguity or missing information (e.g., `FeatureName` for a new feature, unclear requirements), *immediately* ask the user (developer) for clarification.
+    * Continue with the process only after all ambiguities are resolved through user interaction.
 * **Define Testing Strategy:** Propose a testing strategy for the feature. This should be added to the spec file under a `## Testing Strategy` heading. The strategy should include:
     * **Style:** e.g., London school (outside-in) of TDD.
     * **Integration Tests:** What are the key integration points to test?

@@ -6,33 +6,38 @@ This repository contains a set of commands for the Gemini CLI that help streamli
 
 The intended workflow is as follows:
 
-1.  **`review_spec [feature_id]`**: Review the functional specification for a feature.
-2.  **`review_design [feature_id]`**: Review the technical design for a feature.
+1.  **`clarify_spec [feature_id]`**: Reviews and clarifies the functional specification, updating it and creating/modifying test scenarios.
+2.  **`clarify_design [feature_id]`**: Reviews and clarifies the technical design, updating the design document.
 3.  **`tasks [feature_id]`**: Create or update the implementation plan, including testing and documentation strategies.
 4.  **`implement [feature_id]`**: Implement the tasks defined in the specification file, using a TDD/BDD approach.
 5.  **`e2e_tests`**: Run the End-to-End tests to verify the feature in a production-like environment.
 
 ## Commands
 
-### `review_spec`
+### `clarify_spec`
 
-*   **Purpose:** Reviews a functional specification for clarity, completeness, and consistency.
-*   **Why to use it:** To ensure that the requirements are well-defined and testable before starting any implementation work. This helps to prevent misunderstandings and reduces the risk of rework.
-*   **How to use it:** `gemini review_spec <feature_id>`
+*   **Purpose:** Initiates a combined review and clarification process for a functional specification. It reviews the specification for clarity, completeness, consistency, and testability, presents the feedback to the user, and then interactively clarifies and updates the functional specification, including creating or modifying test scenarios.
+*   **Why to use it:** To ensure functional requirements are robust, unambiguous, and fully tested before implementation. This command streamlines the process of refining specifications and preparing for development and testing.
+*   **How to use it:** `gemini clarify_spec <feature_id>`
 *   **What it does:**
-    1.  Finds the specification file based on the `feature_id`.
-    2.  Analyzes the `## Functional Specification` section.
-    3.  Creates a review file with feedback on clarity, completeness, consistency, and testability.
+    1.  Finds the functional specification file based on the `feature_id`.
+    2.  Analyzes the `## Functional Specification` section for clarity, completeness, consistency, and testability.
+    3.  Presents the review feedback directly to the user.
+    4.  Interactively clarifies the feedback with the user, updating the specification based on their input.
+    5.  Creates or modifies test scenarios based on the clarified specification.
+    6.  Saves the updated specification (e.g., `[Original Spec Name]_clarified.md`).
 
-### `review_design`
+### `clarify_design`
 
-*   **Purpose:** Reviews a technical design for soundness, scalability, and maintainability.
-*   **Why to use it:** To ensure the technical design is solid before implementation begins. This helps prevent costly architectural mistakes.
-*   **How to use it:** `gemini review_design <feature_id>`
+*   **Purpose:** Initiates a combined review and clarification process for a technical design. It reviews the design for soundness, scalability, maintainability, and security, presents the feedback to the user, and then interactively clarifies and updates the technical design document.
+*   **Why to use it:** To ensure the technical architecture is sound, scalable, maintainable, and secure before implementation. This command provides a structured way to refine design decisions and prevent costly architectural issues.
+*   **How to use it:** `gemini clarify_design <feature_id>`
 *   **What it does:**
     1.  Finds the technical design document based on the `feature_id`.
     2.  Analyzes the `## Technical Design` section for soundness, scalability, maintainability, and security.
-    3.  Creates a new file named `[Feature Number]_design_review.md` with detailed feedback.
+    3.  Presents the review feedback directly to the user.
+    4.  Interactively clarifies the feedback with the user, updating the design document based on their input.
+    5.  Saves the updated design document (e.g., `[Original Design Doc Name]_clarified.md`).
 
 ### `tasks`
 
