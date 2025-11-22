@@ -15,6 +15,10 @@ prompt = """
 **Process:**
 
 **Phase 1: Smart Discovery (Feature ID Search)**
+0.  **Missing Files Check:**
+    *   Check for the existence of ALL files required to run the application (including but not limited to: `pom.xml`, `package.json`, `Dockerfile`, `docker-compose.yml`, source entry points, and environment configurations).
+    *   **If any required file is missing, DO NOT CREATE IT.**
+    *   Instead, you MUST include a specific task to create the missing file(s) (with valid, non-empty content) in the `## Implementation Tasks` section.
 1.  **Validation:**
     * If `{{args}}` is empty, announce that a feature number is required and exit.
 2.  **Search Context:**
@@ -39,6 +43,7 @@ prompt = """
     * **Deployment:** How to deploy the application.
 * **Draft Implementation Tasks:**
     * Formulate specific, atomic tasks to append to the `## Implementation Tasks` section.
+    * **Missing Config:** If any config files were missing (Phase 1), add tasks to create them now.
     * **Mandatory Final Tasks:** You MUST append the following two tasks at the very end of the list:
         * `- [ ] Run all tests (unit, integration) to ensure the system is stable.`
         * `- [ ] Build the whole application to verify that the changes didn't break the build process.`
